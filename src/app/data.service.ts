@@ -15,6 +15,7 @@ export class DataServiceServer extends DataService {
     state = inject(TransferState);
     value: PageLoad | null = null;
     async load() {
+        console.log('running page load on server...');
         const data = await pageLoad();
         this.state.set(makeStateKey<PageLoad>(key), data);
         this.value = data;
