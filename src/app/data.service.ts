@@ -1,6 +1,6 @@
 import { Injectable, TransferState, inject, makeStateKey } from '@angular/core';
 
-type PageLoad = Awaited<ReturnType<typeof pageLoad>>;
+type PageLoad = Awaited<ReturnType<typeof pageServerLoad>>;
 
 // Abstract
 @Injectable()
@@ -15,8 +15,7 @@ export class DataServiceServer extends DataService {
     state = inject(TransferState);
     value: PageLoad | null = null;
     async load() {
-        console.log('running page load on server...');
-        const data = await pageLoad();
+        const data = await pageServerLoad();
         this.state.set(makeStateKey<PageLoad>(key), data);
         this.value = data;
     }
@@ -36,7 +35,7 @@ export class DataServiceBrowser extends DataService {
 // Config
 const key = 'test';
 
-async function pageLoad() {
+async function pageServerLoad() {
     //const x = await fetch('https://loripsum.net/api/1');
     //const y = await x.text();
     //return y;
